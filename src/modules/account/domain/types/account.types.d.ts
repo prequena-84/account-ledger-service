@@ -1,0 +1,1 @@
+export type TCurrency= 'USD' | 'EUR' | 'GBP' | 'JPY' | 'COP' | 'PEN' | 'BRL' | 'ARS' | 'CNY' | 'CAD' | 'MXN';
