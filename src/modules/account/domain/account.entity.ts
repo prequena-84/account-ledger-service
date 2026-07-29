@@ -1,8 +1,8 @@
 import { Entity, PrimaryColumn, Column, VersionColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from "typeorm";
-import { CurrencyEnum } from "./enum/account.enum";
+import { CurrencyEnum, AccountStatusEnum } from "./enum/account.enum";
 import { numericTransformer } from "./transformer/account.transformer";
 import type { IAccount } from "./types/account.interfaces";
-import type { TCurrency } from "./types/account.types";
+import type { TCurrency, TStatus } from "./types/account.types";
 
 @Entity({ name: 'accounts' })
 export class AccountEntity implements IAccount {
@@ -46,6 +46,13 @@ export class AccountEntity implements IAccount {
         default: CurrencyEnum.USD,
     })
     currency: TCurrency;
+
+    @Column({
+        type: 'enum',
+        enum: AccountStatusEnum,
+        default: AccountStatusEnum.ACTIVE,
+    })
+    status: TStatus;
 
     // Concurrencia Optimista
     @VersionColumn()

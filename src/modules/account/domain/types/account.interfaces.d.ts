@@ -1,4 +1,4 @@
-import type { TCurrency } from "./account.types";
+import type { TCurrency, TStatus } from "./account.types";
 
 export interface IAccount {
     account_id: string;
@@ -6,6 +6,7 @@ export interface IAccount {
     reserved_balance: number;
     total_balance: number;
     currency: TCurrency;
+    status: TStatus;
     version: number;
     createdAt: Date;
     updatedAt: Date;

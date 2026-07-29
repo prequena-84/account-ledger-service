@@ -1,6 +1,4 @@
-import type { TCurrency } from "../types/account.types";
-
-export enum  CurrencyEnum {
+enum  CurrencyEnum {
     USD = 'USD', 
     EUR = 'EUR', 
     GBP = 'GBP', 
@@ -12,4 +10,15 @@ export enum  CurrencyEnum {
     CNY = 'CNY', 
     CAD= 'CAD', 
     MXN = 'MXN'
+};
+
+enum AccountStatusEnum {
+    ACTIVE = 'ACTIVE',
+    INACTIVE = 'INACTIVE',
+    CLOSED = 'CLOSED'
+};
+
+export { 
+    CurrencyEnum,
+    AccountStatusEnum,
 };

@@ -37,6 +37,7 @@ CREATE TABLE IF NOT EXISTS ACCOUNT (
     reserved_balance decimal(12,2) NOT NULL DEFAULT 0,
     total_balance decimal(12,2) NOT NULL DEFAULT 0,
     currency currency_type NOT NULL DEFAULT 'USD',
+    "status" VARCHAR(20) NOT NULL DEFAULT 'ACTIVE',
     "version" BIGINT NOT NULL DEFAULT 0,
     "createdAt"  TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP NOT NULL,
     "updatedAt" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP NOT NULL,
