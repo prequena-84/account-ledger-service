@@ -1,0 +1,71 @@
+services:
+
+  postgres-dev:
+    image: postgres:15-alpine
+    container_name: "postgres-development-banking"
+    restart: always
+    environment:
+      POSTGRES_DB: banking_db
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: Ja2EJ-jDi4yvC@DqJiQfmWLP
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./postgres-init:/docker-entrypoint-initdb.d # scripts de inicialización de base de datos
+      - db_data:/var/lib/postgresql/data            # persistencia de datos para el evaluador
+    networks:
+      - banking-network
+    
+  adminer:
+    image: adminer
+    container_name: adminer_panel
+    restart: always
+    ports:
+      - 8090:8080
+    environment:
+      ADMINER_DEFAULT_SERVER: postgres-dev
+    networks:
+      - banking-network
+
+  development:
+    container_name: "backend-development-banking"
+    image: dev
+    build:
+      context: .
+      target: development
+    env_file:
+      - .env.development
+    ports:
+      - "3000:3000"
+    networks:
+      - banking-network
+    volumes:
+      - .:/app
+      - /app/node_modules
+    restart: unless-stopped
+    depends_on:
+      - postgres-dev
+      - adminer
+
+  production:
+    container_name: "backend-production-banking"
+    image: prod
+    build:
+      context: .
+      target: production
+    env_file:
+      - .env.production
+    ports:
+      - "8080:8080"
+    networks:
+      - banking-network
+    restart: unless-stopped
+
+networks:
+  banking-network:
+    ##driver: bridge
+    external: true 
+    ## codigo para crear la red: docker network create banking-network
+
+volumes:
+  db_data:
