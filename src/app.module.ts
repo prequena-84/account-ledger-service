@@ -7,6 +7,8 @@ import { ConfigModule } from '@nestjs/config';
 
 // Importación del Modulo de Conexion a la Base de Datos MySQL
 import { DatabaseModule } from './config/database/database.module';
+import { AccountModule } from './modules/account/account.module';
+import { TransactionModule } from './modules/transaction/transaction.module';
 
 @Module({
   imports: [
@@ -17,7 +19,10 @@ import { DatabaseModule } from './config/database/database.module';
         '.env',
       ],
     }),
-    DatabaseModule],
+    DatabaseModule,
+    AccountModule,
+    TransactionModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
