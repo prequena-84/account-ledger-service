@@ -35,8 +35,11 @@ services:
       target: development
     env_file:
       - .env.development
+      ## quitar despues de las prueva
     ports:
       - "3000:3000"
+    ##expose:
+      ##- "9090"
     networks:
       - banking-network
     volumes:
