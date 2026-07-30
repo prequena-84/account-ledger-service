@@ -20,7 +20,7 @@ async function bootstrap() {
   // Implemantación del uso de capture de Excepciones Globales
   app.useGlobalFilters(new AllExceptionsFilter());
 
-  const PORT = Number(process.env.PORT ?? 3000);
+  const PORT = Number(process.env.PORT ?? 8080);
   const EXPOSE = Number(process.env.EXPOSE ?? 9090);
 
   await app.listen(PORT, '0.0.0.0');
@@ -32,6 +32,7 @@ async function bootstrap() {
     Puerto: PORT,
     Entorno: process.env.NODE_ENV,
     Test: `http://localhost:${PORT}/api/v1/health`,
+    Adminer: 'http://localhost:8090',
   });
 
 
