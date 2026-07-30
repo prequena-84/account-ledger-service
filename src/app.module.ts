@@ -12,6 +12,7 @@ import { InternalMiddleware } from './core/middleware/internal.middleware';
 import { DatabaseModule } from './config/database/database.module';
 import { AccountModule } from './modules/account/account.module';
 import { TransactionModule } from './modules/transaction/transaction.module';
+import { HealthModule } from './modules/health/health.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { TransactionModule } from './modules/transaction/transaction.module';
     DatabaseModule,
     AccountModule,
     TransactionModule,
+    HealthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
