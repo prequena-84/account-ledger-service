@@ -3,7 +3,7 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 
 // Importamos el filtro de excepciones globales
-//import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
+import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -18,7 +18,7 @@ async function bootstrap() {
   });*/
 
   // Implemantación del uso de capture de Excepciones Globales
-  //app.useGlobalFilters(new AllExceptionsFilter());
+  app.useGlobalFilters(new AllExceptionsFilter());
 
   const PORT = Number(process.env.PORT ?? 3000);
   const EXPOSE = Number(process.env.EXPOSE ?? 9090);
