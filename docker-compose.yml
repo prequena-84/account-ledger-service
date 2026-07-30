@@ -4,7 +4,6 @@ services:
     container_name: "postgres-development-banking"
     restart: always
     environment:
-      # POSTGRES_DB: banking_db (Ya no es necesario, se crean ledger_db y orchestrator_db en el init.sql)
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: Ja2EJ-jDi4yvC@DqJiQfmWLP
     ports:
