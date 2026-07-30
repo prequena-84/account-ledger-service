@@ -1,98 +1,45 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+## Justificación del Stack Tecnológico (Node.js / NestJS vs Java)
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Para la construcción de este Core Bancario, se evaluó el uso de tecnologías tradicionales como Java (Spring Boot), pero se optó estratégicamente por **Node.js con NestJS (TypeScript)** por las siguientes razones arquitectónicas:
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+1. **Alta Concurrencia I/O (Non-Blocking):** En un entorno bancario distribuido, la mayoría del tiempo de procesamiento se gasta esperando respuestas de red (bases de datos, otros microservicios vía gRPC). El modelo asíncrono de un solo hilo de Node.js (Event Loop) maneja miles de conexiones concurrentes I/O de manera mucho más eficiente y con menor consumo de memoria RAM que el modelo tradicional de "un hilo por petición" de Java.
 
-## Description
+2. **Arquitectura Cloud-Native:** Node.js ofrece tiempos de arranque (Cold Starts) drásticamente menores en comparación con la JVM de Java. Esto lo hace ideal para entornos en la nube (GCP Cloud Run, Kubernetes) donde la auto-escalabilidad rápida (Scale-to-Zero y Scale-Up) es un requisito crítico.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+3. **Ecosistema Enterprise con NestJS:** Al usar TypeScript y NestJS, mantenemos el rigor estructural de Java (Inversión de Control, Inyección de Dependencias, Decoradores, Arquitectura Hexagonal) pero ganamos la agilidad y el vasto ecosistema de paquetes de JavaScript, logrando un balance perfecto entre robustez y velocidad de desarrollo (Time-to-Market).
 
-## Project setup
+## Arranque del proyecto
+
+Para Iniciar el proyecto se ejecutar el comando de creacion de la red de Docker donde se comunicaran internamente los microservicios:
 
 ```bash
-$ npm install
+docker network create bancaria-net
 ```
 
-## Compile and run the project
+y posteriormetne se arranca los microservicios con el comando:
 
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+```bash - stage development build
+docker compose build development
 ```
 
-## Run tests
+Al ejecutar este comando Docker espera que se levante la imagen de Docker de Postgres y Adminer para realizar la creacion de la base de datos. y los servicios en los puertos definidos en el docker-compose.yml
 
-```bash
-# unit tests
-$ npm run test
+Luego se levanta el contenedor development
 
-# e2e tests
-$ npm run test:e2e
+```bash (con la bandera "-d" podemos cargar el modo detached)
+docker compose up --build development 
 
-# test coverage
-$ npm run test:cov
+ó
+
+docker compose up -d --build development
+
 ```
 
-## Deployment
+Para ingresar al adminer lo podemos hacer en el navegador con la siguiente direccion: http://localhost:8090
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+Usuario:admin
+Password: Ja2EJ-jDi4yvC@DqJiQfmWLP
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
-
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
-
-## Resources
-
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+Se ha exportado el ambiente de prueba de Postman en el json:
+collection: Ecositema Transaccional Saga-Account
+enviroment: development.postman_environment.json
