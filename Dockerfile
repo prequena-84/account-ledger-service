@@ -8,7 +8,6 @@ FROM base AS development
 ENV NODE_ENV=development
 RUN npm install
 COPY . .
-EXPOSE 3000
 CMD ["npm", "run", "start:dev"]
 
 # Stage de builder para producción
@@ -27,7 +26,6 @@ ENV NODE_ENV=production
 COPY --from=builder /app/build ./build
 COPY --from=builder /app/package*.json ./
 COPY --from=builder /app/node_modules ./node_modules
-EXPOSE 8080
 CMD ["node", "build/main.js"]
 
 # Stage para producción local (mismo que producción pero con tag diferente para Docker Compose)

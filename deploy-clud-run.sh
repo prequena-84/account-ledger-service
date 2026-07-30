@@ -15,6 +15,11 @@ source .env
 set +a
 
 # Validar variables críticas
+if [ -z "$EXPOSE" ]; then
+    echo "❌ Error: EXPOSE no está definida en .env.production"
+    exit 1
+fi
+
 if [ -z "$DB_HOST" ]; then
     echo "❌ Error: DB_HOST no está definida en .env.production"
     exit 1
@@ -92,6 +97,7 @@ gcloud run deploy $SERVICE_NAME \
   --vpc-connector $VPC_CONNECTOR_NAME \
   --vpc-egress private-ranges-only \
   --set-env-vars "NODE_ENV=${NODE_ENV:-production}" \
+  --set-env-vars "EXPOSE=${EXPOSE}" \
   --set-env-vars "DB_HOST=${DB_HOST}" \
   --set-env-vars "DB_USER=${DB_USER}" \
   --set-env-vars "DB_PASSWORD=${DB_PASSWORD}" \

@@ -1,5 +1,4 @@
 services:
-
   postgres-dev:
     image: postgres:15-alpine
     container_name: "postgres-development-banking"
@@ -28,7 +27,7 @@ services:
       - banking-network
 
   development:
-    container_name: "backend-development-banking"
+    container_name: "account-ledger-services-development"
     image: dev
     build:
       context: .
@@ -51,7 +50,7 @@ services:
       - adminer
 
   production:
-    container_name: "backend-production-banking"
+    container_name: "account-ledger-services-production"
     image: prod
     build:
       context: .
@@ -69,9 +68,7 @@ services:
 
 networks:
   banking-network:
-    ##driver: bridge
     external: true 
-    ## codigo para crear la red: docker network create banking-network
 
 volumes:
   db_data:

@@ -20,7 +20,7 @@ async function bootstrap() {
   // Implemantación del uso de capture de Excepciones Globales
   app.useGlobalFilters(new AllExceptionsFilter());
 
-  const PORT = Number(process.env.PORT ?? 8080);
+  const PORT = Number(process.env.PORT ?? 3080);
   const EXPOSE = Number(process.env.EXPOSE ?? 9090);
 
   await app.listen(PORT, '0.0.0.0');
@@ -29,7 +29,7 @@ async function bootstrap() {
     Proyecto: '🚀 Account Ledger Service API',
     Server_Running: `http://localhost:${PORT}/api/v1`,
     Server_Docker: `http://${process.env.NODE_ENV}:${EXPOSE}/api/v1`,
-    Puerto: PORT,
+    Expose_Internal: EXPOSE,
     Entorno: process.env.NODE_ENV,
     Test: `http://localhost:${PORT}/api/v1/health`,
     Adminer: 'http://localhost:8090',
