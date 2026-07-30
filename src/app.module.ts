@@ -11,8 +11,8 @@ import { InternalMiddleware } from './core/middleware/internal.middleware';
 // Importación del Modulo de Conexion a la Base de Datos MySQL
 import { DatabaseModule } from './config/database/database.module';
 import { AccountModule } from './modules/account/account.module';
-import { TransactionModule } from './modules/transaction/transaction.module';
 import { HealthModule } from './modules/health/health.module';
+import { ReservationModule } from './modules/reservation/reservation.module';
 
 @Module({
   imports: [
@@ -25,8 +25,8 @@ import { HealthModule } from './modules/health/health.module';
     }),
     DatabaseModule,
     AccountModule,
-    TransactionModule,
     HealthModule,
+    ReservationModule,
   ],
   controllers: [AppController],
   providers: [AppService],
