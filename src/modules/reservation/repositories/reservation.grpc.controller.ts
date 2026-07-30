@@ -4,8 +4,8 @@ import { ReservationRepository } from './reservation.repository';
 
 // Interfaz para tipar lo que nos llega por gRPC desde el Orquestador
 interface ReserveFundsRequest {
-  transaction_id: string;
-  account_id: string;
+  transactionId: string;
+  accountId: string;
   amount: number;
 }
 
@@ -27,15 +27,15 @@ export class ReservationGrpcController {
    */
   @GrpcMethod('LedgerService', 'ReserveFunds')
   async reserveFunds(data: ReserveFundsRequest): Promise<ReserveFundsResponse> {
-    this.logger.log(`[gRPC] Recibida petición para reservar fondos. Transacción: ${data.transaction_id}`);
+    this.logger.log(`[gRPC] Recibida petición para reservar fondos. Transacción: ${data.transactionId}`);
 
     try {
       // 1. Llamamos a nuestra lógica core con Bloqueo Pesimista
       // Esto asegura que si llegan 100 peticiones gRPC al mismo tiempo para la misma cuenta,
       // la base de datos las formará en fila y no habrá saldos negativos (Race Conditions).
       const success = await this.reservationRepo.reserveFundsPessimistic(
-        data.transaction_id,
-        data.account_id,
+        data.transactionId,
+        data.accountId,
         data.amount,
       );
 

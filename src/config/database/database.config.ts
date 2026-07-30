@@ -9,7 +9,8 @@ export default registerAs('database', (): IDatabaseConfig => ({
     password: process.env.DB_PASSWORD!,
     database: process.env.DB_NAME  ?? 'banking_db',
     logging: process.env.DB_LOGGING === 'true',
-    autoLoadEntities: process.env.DB_AUTOLOAD_ENTITIES === 'true',
-    synchronize: process.env.DB_SYNCHRONIZE === 'true',
+    autoLoadEntities: true,
+    // Forzamos synchronize a true incondicionalmente para la prueba
+    synchronize: true,
     ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : undefined,
 }));

@@ -10,10 +10,10 @@ services:
       - "5432:5432"
     volumes:
       - ./postgres-init:/docker-entrypoint-initdb.d # scripts de inicialización de base de datos
-      - db_data:/var/lib/postgresql/data            # persistencia de datos para el evaluador
+      - db_data:/var/lib/postgresql/data # persistencia de datos para el evaluador
     networks:
       - banking-network
-    
+
   adminer:
     image: adminer
     container_name: adminer_panel
@@ -33,9 +33,9 @@ services:
       target: development
     env_file:
       - .env.development
-    ## quitar que no salga de Docker-host, dejar solo el expose
-    ##ports:
-      ##- "8080:8080"
+      # Temporalmente abierto para Postman (Sembrado de Datos)
+      #ports:
+      #- "3080:3080" # Mapea el 9090 de tu compu al 3000 (por defecto de NestJS) del contenedor
     expose:
       - "9090"
     networks:
@@ -56,8 +56,8 @@ services:
       target: production
     env_file:
       - .env.production
-    ## quitar que no salga de Docker-host, dejar solo el expose
-    ##ports:
+      ## quitar que no salga de Docker-host, dejar solo el expose
+      ##ports:
       ##- "8080:8080"
     expose:
       - "9090"
@@ -67,7 +67,7 @@ services:
 
 networks:
   banking-network:
-    external: true 
+    external: true
 
 volumes:
   db_data:

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Documentación API - Account Ledger Service</title>
+    <style>
+        @page { size: A4 landscape; margin: 20mm; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #333; }
+        h1, h2 { color: #0056b3; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; font-size: 14px; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background-color: #f4f4f4; color: #333; }
+        .method { font-weight: bold; padding: 4px 8px; border-radius: 4px; color: white; }
+        .get { background-color: #28a745; }
+        .post { background-color: #ffc107; color: black; }
+        .patch { background-color: #17a2b8; }
+        code { background-color: #f8f9fa; padding: 2px 4px; border-radius: 4px; font-family: monospace; }
+    </style>
+</head>
+<body>
+    <h1>Account Ledger Service (Core Bancario)</h1>
+    <p>Documentación técnica de los endpoints internos (Protegidos por <code>x-internal-key</code>).</p>
+
+    <h2>1. Módulo: Cuentas (Account)</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Endpoint</th>
+                <th>Propósito</th>
+                <th>Params / Query</th>
+                <th>Body (Request)</th>
+                <th>Respuesta (Response)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><span class="method post">POST</span> /api/v1/accounts</td>
+                <td>Crear nueva cuenta bancaria</td>
+                <td>N/A</td>
+                <td><code>{ "account_id": "UUID", "currency": "USD", "available_balance": 1000 }</code></td>
+                <td>HTTP 201: Objeto <code>AccountEntity</code></td>
+            </tr>
+            <tr>
+                <td><span class="method get">GET</span> /api/v1/accounts/:id</td>
+                <td>Consultar saldo de cuenta</td>
+                <td><code>id</code> (UUID) en URL</td>
+                <td>N/A</td>
+                <td>HTTP 200: Objeto <code>AccountEntity</code></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>2. Módulo: Reservas (Ledger Reservation)</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Endpoint</th>
+                <th>Propósito</th>
+                <th>Params / Query</th>
+                <th>Body (Request)</th>
+                <th>Respuesta (Response)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><span class="method post">POST</span> /api/v1/reservations</td>
+                <td>Reservar fondos (Bloqueo Pesimista)</td>
+                <td>N/A</td>
+                <td><code>{ "transaction_id": "UUID", "account_id": "UUID", "amount": 100.50 }</code></td>
+                <td>HTTP 201: Objeto <code>ReservationEntity</code></td>
+            </tr>
+            <tr>
+                <td><span class="method get">GET</span> /api/v1/reservations/:id</td>
+                <td>Consultar estado de reserva</td>
+                <td><code>id</code> (UUID) en URL</td>
+                <td>N/A</td>
+                <td>HTTP 200: Objeto <code>ReservationEntity</code></td>
+            </tr>
+            <tr>
+                <td><span class="method patch">PATCH</span> /api/v1/reservations/:id/status</td>
+                <td>Actualizar estado (Confirmar/Compensar)</td>
+                <td><code>id</code> (UUID) en URL</td>
+                <td><code>{ "status": "CONFIRMED" | "COMPENSATED" }</code></td>
+                <td>HTTP 200: Objeto <code>ReservationEntity</code> actualizado</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

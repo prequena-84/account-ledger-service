@@ -8,6 +8,7 @@ FROM base AS development
 ENV NODE_ENV=development
 RUN npm install
 COPY . .
+#EXPOSE 3080
 CMD ["npm", "run", "start:dev"]
 
 # Stage de builder para producción
