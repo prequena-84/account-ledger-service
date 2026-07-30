@@ -24,7 +24,7 @@ docker compose build development
 
 Al ejecutar este comando Docker espera que se levante la imagen de Docker de Postgres y Adminer para realizar la creacion de la base de datos. y los servicios en los puertos definidos en el docker-compose.yml
 
-Luego se levanta el contenedor development
+Luego se levanta el contenedor development,
 
 ```bash (con la bandera "-d" podemos cargar el modo detached)
 docker compose up --build development 
@@ -43,3 +43,5 @@ Password: Ja2EJ-jDi4yvC@DqJiQfmWLP
 Se ha exportado el ambiente de prueba de Postman en el json:
 collection: Ecositema Transaccional Saga-Account
 enviroment: development.postman_environment.json
+
+Se repite el mismno proceso para levantar el microservicio "transaction-orchestrator-services" excepto que no es necesario correr de nuevo el comando "docker network create bancaria-net" ya que la red existe.
