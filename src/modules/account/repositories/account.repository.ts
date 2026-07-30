@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 import { AccountEntity } from '../domain/account.entity';
 import { AccountCreateDTO } from '../interfaces/dto/account.create.dto'; 
 import { AccountStatusEnum } from '../domain/enum/account.enum';
-// import type { IAccount } from '../domain/types/account.interfaces';
+import type { TStatus } from '../domain/types/account.types';
 
 @Injectable()
 export class AccountRepository {
@@ -51,6 +51,21 @@ export class AccountRepository {
         account.reserved_balance += amount;
 
         // El 'total_balance' se puede actualizar sumando lo que queda en available y reserved
+        return this.accountRepository.save(account);
+    };
+
+    /**
+     * 4. Actualizacion de estado de la cuenta (Update genérico administrativo)
+     * Utiliza Bloqueo Optimista automático de TypeORM (requiere que mandes la versión actual)
+     */
+    async updateStatus(accountId: string, newStatus: TStatus): Promise<AccountEntity> {
+        // Reutilizamos el método findId
+        const account = await this.findId(accountId); 
+        
+        // Asignamos el nuevo estado
+        account.status = newStatus;
+        
+        // Al guardar, TypeORM incrementará la versión automáticamente
         return this.accountRepository.save(account);
     };
 };

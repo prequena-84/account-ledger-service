@@ -3,7 +3,7 @@ import { CurrencyEnum, AccountStatusEnum } from '../../domain/enum/account.enum'
 import type { IAccount } from '../../domain/types/account.interfaces';
 import type { TCurrency, TStatus } from '../../domain/types/account.types';
 
-export class AccountCreateDTO implements Pick<IAccount, 'account_id' | 'currency' | 'status'> {
+export class AccountCreateDTO implements Pick<IAccount, 'account_id' | 'currency'> {
     @IsString()
     @IsNotEmpty()
     account_id: string;
@@ -11,8 +11,4 @@ export class AccountCreateDTO implements Pick<IAccount, 'account_id' | 'currency
     @IsEnum(CurrencyEnum)
     @IsNotEmpty()
     currency: TCurrency;
-
-    @IsEnum(AccountStatusEnum)
-    @IsNotEmpty()
-    status: TStatus;
 };

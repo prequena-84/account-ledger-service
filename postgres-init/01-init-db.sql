@@ -10,7 +10,7 @@ CREATE TYPE ledger_reservation_status_type AS ENUM ('RESERVED', 'CONFIRMED', 'CO
 -- ============================================================================
 -- BASE DE DATOS 1: TRANSACTION ORCHESTRATOR (BFF)
 -- ============================================================================
-CREATE TABLE IF NOT EXISTS SAGA_TRANSACTION (
+CREATE TABLE IF NOT EXISTS "TRANSACTION" (
     -- Recomendación Tecnica: En Postgres es mejor usar el tipo 'uuid' nativo en lugar de VARCHAR para IDs
     transaction_id UUID PRIMARY KEY, 
     source_account VARCHAR(50) NOT NULL,
