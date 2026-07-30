@@ -35,11 +35,11 @@ services:
       target: development
     env_file:
       - .env.development
-      ## quitar despues de las prueva
-    ports:
-      - "8080:8080"
-    ##expose:
-      ##- "9090"
+    ## quitar que no salga de Docker-host, dejar solo el expose
+    ##ports:
+      ##- "8080:8080"
+    expose:
+      - "9090"
     networks:
       - banking-network
     volumes:
@@ -58,8 +58,11 @@ services:
       target: production
     env_file:
       - .env.production
-    ports:
-      - "8080:8080"
+    ## quitar que no salga de Docker-host, dejar solo el expose
+    ##ports:
+      ##- "8080:8080"
+    expose:
+      - "9090"
     networks:
       - banking-network
     restart: unless-stopped
